@@ -1,0 +1,34 @@
+# Para mostrar automaticamente a lista de bibliotecas e a data de atualização no seu projeto, você pode adicionar algumas etapas ao seu fluxo de trabalho:
+
+# Instale a extensão "Python Extension Pack" no VS Code, que inclui a extensão "Python" e outras extensões úteis para desenvolvimento em Python.
+# Crie um ambiente virtual para o seu projeto usando o virtualenv ou o conda. Isso isola as bibliotecas usadas pelo projeto em um ambiente separado, facilitando a gestão de dependências.
+# Crie um arquivo requirements.txt no diretório raiz do projeto e adicione a lista de bibliotecas utilizadas no projeto. Você pode gerar essa lista automaticamente usando o comando pip freeze > requirements.txt.
+# Adicione o seguinte código ao seu arquivo de projeto:
+
+import datetime
+import pkg_resources
+
+# Bibliotecas utilizadas
+print("Bibliotecas utilizadas:")
+for package in pkg_resources.working_set:
+    print(f"{package.key}=={package.version}")
+
+# Data da última atualização
+data_atualizacao = datetime.datetime.now().strftime("%Y-%m-%d")
+print(f"\nÚltima atualização: {data_atualizacao}")
+
+
+# Esse código irá imprimir a lista de bibliotecas instaladas no ambiente virtual do projeto e a data atual. Cada vez que você salvar o arquivo, a data será atualizada automaticamente.
+
+# Para automatizar ainda mais o processo, você pode criar um script que instala automaticamente as bibliotecas necessárias e atualiza a lista de dependências no arquivo requirements.txt. Por exemplo:
+
+#!/bin/bash
+
+# Cria o ambiente virtual
+python3 -m venv env
+
+# Ativa o ambiente virtual
+source env/bin/activate
+
+# Instala as bibliotecas necessárias
+pip install -r requirements.txt
